@@ -27,7 +27,7 @@
   <meta name="apple-mobile-web-app-title" content="Валерия">
 
   <meta property="og:title" content="Валерия Александрова — Мои приложения">
-  <meta property="og:description" content="Учёт финансов и чек-листы — личные веб-приложения">
+  <meta property="og:description" content="Личные веб-приложения">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://valeeryyy.ru">
 
@@ -44,9 +44,7 @@
       --border: #e8eaed;
       --card-border: rgba(255,255,255,0.8);
       --text: #0f172a; --text-muted: #64748b; --text-subtle: #94a3b8;
-      --income: #059669; --income-soft: #ecfdf5; --income-border: #a7f3d0;
       --blue: #3b82f6; --blue-soft: #eff6ff; --blue-border: #bfdbfe;
-      --expense: #dc2626;
       --btn-1: #1e293b; --btn-2: #0f172a;
       --shadow-xs: 0 1px 2px rgba(15,23,42,0.04);
       --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
@@ -67,9 +65,7 @@
       --border: rgba(148,163,184,0.15);
       --card-border: rgba(255,255,255,0.08);
       --text: #f1f5f9; --text-muted: #94a3b8; --text-subtle: #64748b;
-      --income: #34d399; --income-soft: rgba(5,150,105,0.15); --income-border: rgba(52,211,153,0.35);
       --blue: #60a5fa; --blue-soft: rgba(59,130,246,0.15); --blue-border: rgba(96,165,250,0.35);
-      --expense: #f87171;
       --btn-1: #334155; --btn-2: #1e293b;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
@@ -169,12 +165,19 @@
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-    .avatar-wrap { position: relative; margin-bottom: 20px; }
+    .avatar-wrap {
+      position: relative; margin-bottom: 20px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none; -webkit-user-select: none;
+      transition: transform 0.1s ease;
+    }
     .avatar-wrap::before {
       content: ''; position: absolute; inset: -6px; border-radius: 50%;
       background: linear-gradient(135deg, #059669 0%, #3b82f6 50%, #8b5cf6 100%);
       opacity: 0.2;
       animation: pulseGlow 3s ease-in-out infinite;
+      pointer-events: none;
     }
     @keyframes pulseGlow {
       0%, 100% { transform: scale(1); opacity: 0.2; }
@@ -185,6 +188,8 @@
       object-fit: cover; border: 4px solid var(--surface-solid);
       box-shadow: var(--shadow-lg); background: var(--surface-alt);
       transition: border-color var(--transition);
+      pointer-events: none;
+      display: block;
     }
     .name {
       font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
@@ -241,7 +246,13 @@
       background: linear-gradient(90deg, transparent, var(--border), transparent);
     }
 
-    .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 32px; }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
     .app-card {
       display: flex; flex-direction: column; padding: 28px 26px;
       background: var(--surface);
@@ -251,8 +262,6 @@
       position: relative; overflow: hidden; transition: all var(--transition); cursor: pointer;
       animation: cardIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    .app-card:nth-child(1) { animation-delay: 0.15s; }
-    .app-card:nth-child(2) { animation-delay: 0.25s; }
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -261,7 +270,6 @@
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
       opacity: 0; transition: opacity var(--transition);
     }
-    .app-card.finance::before { background: linear-gradient(90deg, #34d399 0%, #059669 100%); }
     .app-card.check::before { background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%); }
     .app-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-2xl); }
     .app-card:hover::before { opacity: 1; }
@@ -272,17 +280,9 @@
       transition: transform var(--transition);
     }
     .app-card:hover .app-icon { transform: scale(1.08) rotate(-3deg); }
-    .app-card.finance .app-icon {
-      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-      color: #047857; box-shadow: 0 4px 14px rgba(5,150,105,0.15);
-    }
     .app-card.check .app-icon {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       color: #2563eb; box-shadow: 0 4px 14px rgba(59,130,246,0.15);
-    }
-    [data-theme="dark"] .app-card.finance .app-icon {
-      background: linear-gradient(135deg, rgba(5,150,105,0.2) 0%, rgba(52,211,153,0.15) 100%);
-      color: #34d399;
     }
     [data-theme="dark"] .app-card.check .app-icon {
       background: linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(96,165,250,0.15) 100%);
@@ -296,10 +296,6 @@
       padding: 8px 14px; border-radius: 8px;
       background: var(--surface-alt); border: 1px solid var(--border);
       color: var(--text); transition: all var(--transition-fast); align-self: flex-start;
-    }
-    .app-card.finance:hover .app-link {
-      background: var(--income-soft); border-color: var(--income-border);
-      color: var(--income); transform: translateX(4px);
     }
     .app-card.check:hover .app-link {
       background: var(--blue-soft); border-color: var(--blue-border);
@@ -375,7 +371,8 @@
   <div class="page">
 
     <div class="header">
-      <div class="avatar-wrap">
+      <!-- 🔐 Секрет: 5 быстрых тапов/кликов по аватару → открывается финансовая программа -->
+      <div class="avatar-wrap" id="avatarWrap" title="Валерия">
         <img src="avatar.jpg" alt="Валерия Александрова" class="avatar" onerror="this.src='https://i.pravatar.cc/300?img=44'">
       </div>
       <h1 class="name">Валерия Александрова</h1>
@@ -398,24 +395,10 @@
       <button class="install-btn" id="installBtn">Установить</button>
     </div>
 
-    <div class="section-title">Мои приложения</div>
+    <div class="section-title">Моё приложение</div>
 
     <div class="apps-grid">
-      <!-- ✅ Финансы — ссылка на GitHub Pages (обновлена) -->
-      <a href="https://dexart2708-hash.github.io/finance-app/" class="app-card finance">
-        <div class="app-icon">💰</div>
-        <div class="app-title">Учёт финансов</div>
-        <div class="app-desc">Приходы и расходы, отчёты, экспорт в Excel, поиск и заметки к операциям.</div>
-        <div class="app-link">
-          Открыть приложение
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </div>
-      </a>
-
-      <!-- ✅ Чек-листы -->
+      <!-- Карточка финансов УБРАНА — доступ через секретный тап по аватару -->
       <a href="https://check.valeeryyy.ru" class="app-card check">
         <div class="app-icon">✅</div>
         <div class="app-title">Чек-листы</div>
@@ -437,8 +420,10 @@
   </div>
 
   <script>
+    // Год
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Тема
     const themeToggle = document.getElementById('themeToggle');
     const themeColorMeta = document.getElementById('themeColorMeta');
     function applyThemeColor(theme) {
@@ -453,6 +438,7 @@
       applyThemeColor(next);
     });
 
+    // Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').catch(err => {
@@ -461,6 +447,7 @@
       });
     }
 
+    // PWA install prompt
     let deferredPrompt = null;
     const installBanner = document.getElementById('installBanner');
     const installBtn = document.getElementById('installBtn');
@@ -483,6 +470,76 @@
       installBanner.classList.remove('visible');
       deferredPrompt = null;
     });
+
+    // ============================================
+    // 🔐 СЕКРЕТНЫЙ ВХОД В ФИНАНСЫ
+    // 5 быстрых тапов/кликов по аватару за 2 секунды
+    // Работает и на телефоне, и на компьютере
+    // ============================================
+    (function() {
+      const FINANCE_URL = 'https://dexart2708-hash.github.io/finance-app/';
+      const REQUIRED_CLICKS = 5;
+      const TIME_WINDOW = 2000; // 2 секунды
+
+      let clicks = 0;
+      let firstClickTime = 0;
+      let resetTimer = null;
+      let lastTapTime = 0;
+
+      const avatar = document.getElementById('avatarWrap');
+      if (!avatar) return;
+
+      function handleTap() {
+        const now = Date.now();
+
+        // ✅ Защита от двойного срабатывания (touchstart + click на некоторых телефонах)
+        if (now - lastTapTime < 50) return;
+        lastTapTime = now;
+
+        // Если прошло больше 2 секунд с первого тапа — начинаем заново
+        if (now - firstClickTime > TIME_WINDOW) {
+          clicks = 1;
+          firstClickTime = now;
+        } else {
+          clicks++;
+        }
+
+        // Лёгкая пульсация при каждом тапе (визуальный отклик)
+        avatar.style.transform = 'scale(0.92)';
+        setTimeout(() => { avatar.style.transform = ''; }, 100);
+
+        // Сбрасываем счётчик через 2 секунды, если тапы прекратились
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          clicks = 0;
+          firstClickTime = 0;
+        }, TIME_WINDOW);
+
+        // 5 тапов достигнуто — открываем финансы
+        if (clicks >= REQUIRED_CLICKS) {
+          clicks = 0;
+          firstClickTime = 0;
+          clearTimeout(resetTimer);
+          // Задержка, чтобы анимация пульсации отработала
+          setTimeout(() => {
+            window.location.href = FINANCE_URL;
+          }, 180);
+        }
+      }
+
+      // ✅ touchstart срабатывает мгновенно на телефоне (без задержки 300 мс)
+      avatar.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // отключаем «синтетический» click, который iOS добавляет после тапа
+        handleTap();
+      }, { passive: false });
+
+      // Резервный вариант для компьютера и браузеров без touch
+      avatar.addEventListener('click', (e) => {
+        if (!('ontouchstart' in window)) {
+          handleTap();
+        }
+      });
+    })();
   </script>
 
 </body>
