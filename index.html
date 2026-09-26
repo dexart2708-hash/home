@@ -5,53 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Валерия Александрова — Мои приложения</title>
 
+  <!-- 🚀 Предзагрузка темы (чтобы не было мигания) -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- 🎨 Favicon -->
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="theme-color" content="#ffffff" id="themeColorMeta">
+
+  <!-- 📱 PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Валерия">
+
+  <!-- 💬 Open Graph (для красивых превью в мессенджерах) -->
+  <meta property="og:title" content="Валерия Александрова — Мои приложения">
+  <meta property="og:description" content="Учёт финансов и чек-листы — личные веб-приложения">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://valeeryyy.ru">
+
   <!-- Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
+    /* ============ СВЕТЛАЯ ТЕМА ============ */
     :root {
-      --surface:       #ffffff;
+      --bg-1:          #f8f9fb;
+      --bg-2:          #eef0f3;
+      --surface:       rgba(255, 255, 255, 0.85);
+      --surface-solid: #ffffff;
       --surface-alt:   #fafbfc;
+      --surface-hover: #f8fafc;
       --border:        #e8eaed;
+      --border-strong: rgba(255, 255, 255, 0.8);
+      --header-border: rgba(255, 255, 255, 0.8);
 
       --text:          #0f172a;
       --text-muted:    #64748b;
       --text-subtle:   #94a3b8;
 
-      --accent:        #0f172a;
-      --accent-hover:  #1e293b;
-
       --income:        #059669;
       --income-soft:   #ecfdf5;
       --income-border: #a7f3d0;
-
-      --expense:       #dc2626;
-      --expense-soft:  #fef2f2;
-      --expense-border: #fecaca;
-
       --blue:          #3b82f6;
       --blue-soft:     #eff6ff;
       --blue-border:   #bfdbfe;
-
-      --radius-sm:     8px;
-      --radius:        12px;
-      --radius-lg:     20px;
-      --radius-xl:     28px;
+      --expense:       #dc2626;
 
       --shadow-xs:     0 1px 2px rgba(15, 23, 42, 0.04);
       --shadow-sm:     0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
       --shadow-md:     0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
       --shadow-lg:     0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
       --shadow-xl:     0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
-      --shadow-2xl:    0 25px 50px -12px rgba(15, 23, 42, 0.15);
+      --shadow-2xl:    0 25px 50px -12px rgba(15, 23, 42, 0.18);
+
+      --avatar-glow:   rgba(5, 150, 105, 0.15);
+      --bg-opacity:    0.055;
 
       --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
       --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       --transition:      0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============ ТЁМНАЯ ТЕМА ============ */
+    [data-theme="dark"] {
+      --bg-1:          #0a0f1c;
+      --bg-2:          #0f172a;
+      --surface:       rgba(30, 41, 59, 0.65);
+      --surface-solid: #1e293b;
+      --surface-alt:   #1e293b;
+      --surface-hover: #334155;
+      --border:        rgba(148, 163, 184, 0.15);
+      --border-strong: rgba(255, 255, 255, 0.08);
+      --header-border: rgba(255, 255, 255, 0.08);
+
+      --text:          #f1f5f9;
+      --text-muted:    #94a3b8;
+      --text-subtle:   #64748b;
+
+      --income:        #34d399;
+      --income-soft:   rgba(5, 150, 105, 0.15);
+      --income-border: rgba(52, 211, 153, 0.35);
+      --blue:          #60a5fa;
+      --blue-soft:     rgba(59, 130, 246, 0.15);
+      --blue-border:   rgba(96, 165, 250, 0.35);
+      --expense:       #f87171;
+
+      --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md:     0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+      --shadow-lg:     0 10px 15px -3px rgba(0, 0, 0, 0.55), 0 4px 6px -2px rgba(0, 0, 0, 0.35);
+      --shadow-xl:     0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+      --shadow-2xl:    0 25px 50px -12px rgba(0, 0, 0, 0.7);
+
+      --avatar-glow:   rgba(96, 165, 250, 0.3);
+      --bg-opacity:    0.07;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,6 +127,7 @@
       line-height: 1.5;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background-color var(--transition), color var(--transition);
     }
 
     body {
@@ -81,11 +144,12 @@
         radial-gradient(ellipse at bottom right,  rgba(220, 38, 38, 0.07) 0%, transparent 55%),
         radial-gradient(ellipse at top right,     rgba(59, 130, 246, 0.06) 0%, transparent 50%),
         radial-gradient(ellipse at bottom left,   rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-        linear-gradient(180deg, #f8f9fb 0%, #eef0f3 100%);
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
       background-attachment: fixed;
+      transition: background var(--transition);
     }
 
-    /* ============ ВАЛЮТНЫЙ ФОН ============ */
+    /* Валютный фон */
     body::before {
       content: '';
       position: fixed;
@@ -95,8 +159,13 @@
       background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='340'%20height='340'%20viewBox='0%200%20340%20340'%3E%3Cg%20fill='%230f172a'%20font-family='Georgia,serif'%20font-weight='700'%3E%3Ctext%20x='25'%20y='70'%20font-size='54'%20transform='rotate(-15%2025%2070)'%3E%24%3C/text%3E%3Ctext%20x='220'%20y='55'%20font-size='42'%20transform='rotate(18%20220%2055)'%3E%E2%82%AC%3C/text%3E%3Ctext%20x='100'%20y='185'%20font-size='50'%20transform='rotate(-6%20100%20185)'%3E%E2%82%BD%3C/text%3E%3Ctext%20x='255'%20y='210'%20font-size='46'%20transform='rotate(12%20255%20210)'%3E%C2%A3%3C/text%3E%3Ctext%20x='45'%20y='305'%20font-size='44'%20transform='rotate(22%2045%20305)'%3E%C2%A5%3C/text%3E%3Ctext%20x='225'%20y='320'%20font-size='40'%20transform='rotate(-18%20225%20320)'%3E%E2%82%A3%3C/text%3E%3C/g%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 340px 340px;
-      opacity: 0.055;
+      opacity: var(--bg-opacity);
       animation: bgFloat 90s linear infinite;
+      transition: opacity var(--transition), filter var(--transition);
+    }
+
+    [data-theme="dark"] body::before {
+      filter: invert(1);
     }
 
     @keyframes bgFloat {
@@ -111,6 +180,62 @@
       z-index: 0;
       pointer-events: none;
       background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+      transition: opacity var(--transition);
+    }
+    [data-theme="dark"] body::after { opacity: 0; }
+
+    /* ============ ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ============ */
+    .theme-toggle {
+      position: fixed;
+      top: calc(20px + env(safe-area-inset-top));
+      right: calc(20px + env(safe-area-inset-right));
+      z-index: 100;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition);
+      padding: 0;
+      overflow: hidden;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.08) rotate(12deg);
+      box-shadow: var(--shadow-lg);
+    }
+    .theme-toggle:active { transform: scale(0.95); }
+
+    .theme-toggle svg {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      transition: all var(--transition);
+    }
+    .icon-sun {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+      color: #f59e0b;
+    }
+    .icon-moon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.5);
+      color: #60a5fa;
+    }
+    [data-theme="dark"] .icon-sun {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.5);
+    }
+    [data-theme="dark"] .icon-moon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
     }
 
     /* ============ КОНТЕЙНЕР ============ */
@@ -128,16 +253,17 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
       padding: 40px 32px 36px;
-      background: rgba(255, 255, 255, 0.78);
+      background: var(--surface);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: var(--radius-xl);
+      border: 1px solid var(--header-border);
+      border-radius: 28px;
       box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
+      transition: background var(--transition), border-color var(--transition);
     }
 
     .header::before {
@@ -164,13 +290,13 @@
       position: absolute;
       inset: -6px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #059669 0%, #3b82f6 50%, #dc2626 100%);
-      opacity: 0.15;
+      background: linear-gradient(135deg, #059669 0%, #3b82f6 50%, #8b5cf6 100%);
+      opacity: 0.2;
       animation: pulseGlow 3s ease-in-out infinite;
     }
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 0.15; }
-      50%      { transform: scale(1.08); opacity: 0.28; }
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50%      { transform: scale(1.08); opacity: 0.32; }
     }
     .avatar {
       position: relative;
@@ -178,9 +304,10 @@
       height: 96px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid rgba(255, 255, 255, 0.95);
+      border: 4px solid var(--surface-solid);
       box-shadow: var(--shadow-lg);
       background: var(--surface-alt);
+      transition: border-color var(--transition);
     }
 
     .name {
@@ -188,7 +315,7 @@
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.15;
-      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -213,10 +340,63 @@
       border: 1px solid var(--border);
       border-radius: 999px;
     }
-    .location svg {
-      width: 12px;
-      height: 12px;
+    .location svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ============ БАННЕР УСТАНОВКИ ============ */
+    .install-banner {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .install-banner.visible { display: flex; }
+    .install-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ecfdf5 0%, #dbeafe 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
       flex-shrink: 0;
+    }
+    .install-text { flex: 1; min-width: 0; }
+    .install-text strong {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .install-text span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .install-btn {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .install-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
     }
 
     /* ============ ЗАГОЛОВОК СЕКЦИИ ============ */
@@ -254,11 +434,11 @@
       display: flex;
       flex-direction: column;
       padding: 28px 26px;
-      background: rgba(255, 255, 255, 0.85);
+      background: var(--surface);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: var(--radius-lg);
+      border: 1px solid var(--header-border);
+      border-radius: 20px;
       box-shadow: var(--shadow-md);
       text-decoration: none;
       color: inherit;
@@ -284,17 +464,12 @@
       opacity: 0;
       transition: opacity var(--transition);
     }
-    .app-card.finance::before {
-      background: linear-gradient(90deg, #34d399 0%, #059669 100%);
-    }
-    .app-card.check::before {
-      background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
-    }
+    .app-card.finance::before { background: linear-gradient(90deg, #34d399 0%, #059669 100%); }
+    .app-card.check::before   { background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%); }
 
     .app-card:hover {
       transform: translateY(-6px);
       box-shadow: var(--shadow-2xl);
-      border-color: rgba(255, 255, 255, 1);
     }
     .app-card:hover::before { opacity: 1; }
 
@@ -321,6 +496,14 @@
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       color: #2563eb;
       box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
+    }
+    [data-theme="dark"] .app-card.finance .app-icon {
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.2) 0%, rgba(52, 211, 153, 0.15) 100%);
+      color: #34d399;
+    }
+    [data-theme="dark"] .app-card.check .app-icon {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(96, 165, 250, 0.15) 100%);
+      color: #60a5fa;
     }
 
     .app-title {
@@ -354,7 +537,6 @@
       color: var(--text);
       transition: all var(--transition-fast);
       align-self: flex-start;
-      font-variant-numeric: tabular-nums;
     }
     .app-card.finance:hover .app-link {
       background: var(--income-soft);
@@ -383,11 +565,12 @@
       color: var(--text-subtle);
       font-weight: 500;
       border-top: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.6);
+      background: var(--surface);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-radius: var(--radius-lg);
+      border-radius: 16px;
       animation: fadeInUp 0.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      transition: background var(--transition), border-color var(--transition);
     }
     .footer .heart {
       color: #dc2626;
@@ -401,7 +584,6 @@
       45%      { transform: scale(1.15); }
     }
 
-    /* ============ АНИМАЦИИ ============ */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -414,9 +596,17 @@
         padding-top: calc(20px + env(safe-area-inset-top));
         padding-bottom: calc(20px + env(safe-area-inset-bottom));
       }
-      body::before { background-size: 260px 260px; opacity: 0.05; }
+      body::before { background-size: 260px 260px; }
 
-      .header { padding: 32px 24px 28px; border-radius: var(--radius-lg); }
+      .theme-toggle {
+        top: calc(14px + env(safe-area-inset-top));
+        right: calc(14px + env(safe-area-inset-right));
+        width: 40px;
+        height: 40px;
+      }
+      .theme-toggle svg { width: 18px; height: 18px; }
+
+      .header { padding: 32px 24px 28px; border-radius: 22px; }
       .avatar { width: 80px; height: 80px; border-width: 3px; }
       .avatar-wrap::before { inset: -4px; }
       .name { font-size: 1.625rem; }
@@ -429,6 +619,10 @@
 
       .section-title::before,
       .section-title::after { max-width: 40px; }
+
+      .install-banner { padding: 14px 16px; gap: 12px; }
+      .install-icon { width: 36px; height: 36px; font-size: 1.125rem; }
+      .install-btn { padding: 8px 14px; font-size: 0.75rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -442,16 +636,27 @@
 </head>
 <body>
 
+  <!-- 🌗 Кнопка переключения темы -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
   <div class="page">
 
-    <!-- ============ ШАПКА С ФОТО И ИМЕНЕМ ============ -->
+    <!-- ============ ШАПКА ============ -->
     <div class="header">
       <div class="avatar-wrap">
         <!-- Замените avatar.jpg на имя вашего файла с фото -->
         <img src="avatar.jpg" alt="Валерия Александрова" class="avatar" onerror="this.src='https://i.pravatar.cc/300?img=44'">
       </div>
       <h1 class="name">Валерия Александрова</h1>
-      <p class="tagline">Веб-разработчик · Автор проектов</p>
+      <p class="tagline" id="greeting">Добро пожаловать 👋</p>
       <span class="location">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -461,13 +666,22 @@
       </span>
     </div>
 
+    <!-- 📲 Баннер установки PWA -->
+    <div class="install-banner" id="installBanner">
+      <div class="install-icon">📲</div>
+      <div class="install-text">
+        <strong>Установить как приложение</strong>
+        <span>Быстрый доступ с главного экрана</span>
+      </div>
+      <button class="install-btn" id="installBtn">Установить</button>
+    </div>
+
     <!-- ============ ЗАГОЛОВОК ============ -->
     <div class="section-title">Мои приложения</div>
 
     <!-- ============ СЕТКА ПРИЛОЖЕНИЙ ============ -->
     <div class="apps-grid">
 
-      <!-- ФИНАНСЫ -->
       <a href="https://finance.valeeryyy.ru" class="app-card finance">
         <div class="app-icon">💰</div>
         <div class="app-title">Учёт финансов</div>
@@ -481,7 +695,6 @@
         </div>
       </a>
 
-      <!-- ЧЕК-ЛИСТЫ -->
       <a href="https://check.valeeryyy.ru" class="app-card check">
         <div class="app-icon">✅</div>
         <div class="app-title">Чек-листы</div>
@@ -505,8 +718,69 @@
   </div>
 
   <script>
-    // Автоматический год
+    // ============ ГОД ============
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ============ ПРИВЕТСТВИЕ ПО ВРЕМЕНИ СУТОК ============
+    (function() {
+      const h = new Date().getHours();
+      let greeting = 'Добро пожаловать 👋';
+      if (h >= 5 && h < 12) greeting = 'Доброе утро ☀️';
+      else if (h >= 12 && h < 18) greeting = 'Добрый день 🌤';
+      else if (h >= 18 && h < 23) greeting = 'Добрый вечер 🌆';
+      else greeting = 'Доброй ночи 🌙';
+      document.getElementById('greeting').textContent = greeting;
+    })();
+
+    // ============ ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ============
+    const themeToggle = document.getElementById('themeToggle');
+    const themeColorMeta = document.getElementById('themeColorMeta');
+
+    function applyThemeColor(theme) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#ffffff');
+    }
+    applyThemeColor(document.documentElement.getAttribute('data-theme'));
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      applyThemeColor(next);
+    });
+
+    // ============ PWA: SERVICE WORKER ============
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.warn('SW не зарегистрирован:', err);
+        });
+      });
+    }
+
+    // ============ PWA: УСТАНОВКА ============
+    let deferredPrompt = null;
+    const installBanner = document.getElementById('installBanner');
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBanner.classList.add('visible');
+    });
+
+    installBtn?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBanner.classList.remove('visible');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBanner.classList.remove('visible');
+      deferredPrompt = null;
+    });
   </script>
 
 </body>
