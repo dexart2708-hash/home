@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Валерия Александрова — Мои приложения</title>
+
+  <!-- Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --surface:       #ffffff;
+      --surface-alt:   #fafbfc;
+      --border:        #e8eaed;
+
+      --text:          #0f172a;
+      --text-muted:    #64748b;
+      --text-subtle:   #94a3b8;
+
+      --accent:        #0f172a;
+      --accent-hover:  #1e293b;
+
+      --income:        #059669;
+      --income-soft:   #ecfdf5;
+      --income-border: #a7f3d0;
+
+      --expense:       #dc2626;
+      --expense-soft:  #fef2f2;
+      --expense-border: #fecaca;
+
+      --blue:          #3b82f6;
+      --blue-soft:     #eff6ff;
+      --blue-border:   #bfdbfe;
+
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --radius-xl:     28px;
+
+      --shadow-xs:     0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-sm:     0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md:     0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
+      --shadow-lg:     0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+      --shadow-xl:     0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+      --shadow-2xl:    0 25px 50px -12px rgba(15, 23, 42, 0.15);
+
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition:      0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: var(--font);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: 'cv02','cv03','cv04','cv11','tnum';
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      padding-top: calc(40px + env(safe-area-inset-top));
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+      padding-left: calc(24px + env(safe-area-inset-left));
+      padding-right: calc(24px + env(safe-area-inset-right));
+      background:
+        radial-gradient(ellipse at top left,     rgba(5, 150, 105, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at bottom right,  rgba(220, 38, 38, 0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at top right,     rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom left,   rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, #f8f9fb 0%, #eef0f3 100%);
+      background-attachment: fixed;
+    }
+
+    /* ============ ВАЛЮТНЫЙ ФОН ============ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='340'%20height='340'%20viewBox='0%200%20340%20340'%3E%3Cg%20fill='%230f172a'%20font-family='Georgia,serif'%20font-weight='700'%3E%3Ctext%20x='25'%20y='70'%20font-size='54'%20transform='rotate(-15%2025%2070)'%3E%24%3C/text%3E%3Ctext%20x='220'%20y='55'%20font-size='42'%20transform='rotate(18%20220%2055)'%3E%E2%82%AC%3C/text%3E%3Ctext%20x='100'%20y='185'%20font-size='50'%20transform='rotate(-6%20100%20185)'%3E%E2%82%BD%3C/text%3E%3Ctext%20x='255'%20y='210'%20font-size='46'%20transform='rotate(12%20255%20210)'%3E%C2%A3%3C/text%3E%3Ctext%20x='45'%20y='305'%20font-size='44'%20transform='rotate(22%2045%20305)'%3E%C2%A5%3C/text%3E%3Ctext%20x='225'%20y='320'%20font-size='40'%20transform='rotate(-18%20225%20320)'%3E%E2%82%A3%3C/text%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 340px 340px;
+      opacity: 0.055;
+      animation: bgFloat 90s linear infinite;
+    }
+
+    @keyframes bgFloat {
+      from { background-position: 0 0; }
+      to   { background-position: 340px 340px; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+    }
+
+    /* ============ КОНТЕЙНЕР ============ */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      width: 100%;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ============ ШАПКА ============ */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 32px 36px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #059669 0%, #3b82f6 33%, #8b5cf6 66%, #dc2626 100%);
+      background-size: 200% 100%;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    .avatar-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #059669 0%, #3b82f6 50%, #dc2626 100%);
+      opacity: 0.15;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.15; }
+      50%      { transform: scale(1.08); opacity: 0.28; }
+    }
+    .avatar {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-lg);
+      background: var(--surface-alt);
+    }
+
+    .name {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .location {
+      font-size: 0.8125rem;
+      color: var(--text-subtle);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 4px 12px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+    .location svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ============ ЗАГОЛОВОК СЕКЦИИ ============ */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .section-title::before,
+    .section-title::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ============ СЕТКА КАРТОЧЕК ============ */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .app-card {
+      display: flex;
+      flex-direction: column;
+      padding: 28px 26px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+      cursor: pointer;
+      animation: cardIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .app-card:nth-child(1) { animation-delay: 0.15s; }
+    .app-card:nth-child(2) { animation-delay: 0.25s; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .app-card.finance::before {
+      background: linear-gradient(90deg, #34d399 0%, #059669 100%);
+    }
+    .app-card.check::before {
+      background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+    }
+
+    .app-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-2xl);
+      border-color: rgba(255, 255, 255, 1);
+    }
+    .app-card:hover::before { opacity: 1; }
+
+    .app-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 18px;
+      transition: transform var(--transition);
+      position: relative;
+    }
+    .app-card:hover .app-icon { transform: scale(1.08) rotate(-3deg); }
+
+    .app-card.finance .app-icon {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      color: #047857;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.15);
+    }
+    .app-card.check .app-icon {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      color: #2563eb;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
+    }
+
+    .app-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+
+    .app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: all var(--transition-fast);
+      align-self: flex-start;
+      font-variant-numeric: tabular-nums;
+    }
+    .app-card.finance:hover .app-link {
+      background: var(--income-soft);
+      border-color: var(--income-border);
+      color: var(--income);
+      transform: translateX(4px);
+    }
+    .app-card.check:hover .app-link {
+      background: var(--blue-soft);
+      border-color: var(--blue-border);
+      color: var(--blue);
+      transform: translateX(4px);
+    }
+    .app-link svg {
+      width: 12px;
+      height: 12px;
+      transition: transform var(--transition-fast);
+    }
+    .app-card:hover .app-link svg { transform: translateX(3px); }
+
+    /* ============ ФУТЕР ============ */
+    .footer {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      font-weight: 500;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-lg);
+      animation: fadeInUp 0.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .footer .heart {
+      color: #dc2626;
+      display: inline-block;
+      animation: heartbeat 1.6s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15%      { transform: scale(1.2); }
+      30%      { transform: scale(1); }
+      45%      { transform: scale(1.15); }
+    }
+
+    /* ============ АНИМАЦИИ ============ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============ АДАПТИВ ============ */
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 16px;
+        padding-top: calc(20px + env(safe-area-inset-top));
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      }
+      body::before { background-size: 260px 260px; opacity: 0.05; }
+
+      .header { padding: 32px 24px 28px; border-radius: var(--radius-lg); }
+      .avatar { width: 80px; height: 80px; border-width: 3px; }
+      .avatar-wrap::before { inset: -4px; }
+      .name { font-size: 1.625rem; }
+      .tagline { font-size: 0.875rem; }
+
+      .apps-grid { grid-template-columns: 1fr; gap: 14px; }
+      .app-card { padding: 24px 22px; }
+      .app-icon { width: 48px; height: 48px; font-size: 1.5rem; border-radius: 14px; margin-bottom: 14px; }
+      .app-title { font-size: 1.0625rem; }
+
+      .section-title::before,
+      .section-title::after { max-width: 40px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ============ ШАПКА С ФОТО И ИМЕНЕМ ============ -->
+    <div class="header">
+      <div class="avatar-wrap">
+        <!-- Замените avatar.jpg на имя вашего файла с фото -->
+        <img src="avatar.jpg" alt="Валерия Александрова" class="avatar" onerror="this.src='https://i.pravatar.cc/300?img=44'">
+      </div>
+      <h1 class="name">Валерия Александрова</h1>
+      <p class="tagline">Веб-разработчик · Автор проектов</p>
+      <span class="location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        valeeryyy.ru
+      </span>
+    </div>
+
+    <!-- ============ ЗАГОЛОВОК ============ -->
+    <div class="section-title">Мои приложения</div>
+
+    <!-- ============ СЕТКА ПРИЛОЖЕНИЙ ============ -->
+    <div class="apps-grid">
+
+      <!-- ФИНАНСЫ -->
+      <a href="https://finance.valeeryyy.ru" class="app-card finance">
+        <div class="app-icon">💰</div>
+        <div class="app-title">Учёт финансов</div>
+        <div class="app-desc">Приходы и расходы, отчёты, экспорт в Excel, поиск и заметки к операциям.</div>
+        <div class="app-link">
+          Открыть приложение
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- ЧЕК-ЛИСТЫ -->
+      <a href="https://check.valeeryyy.ru" class="app-card check">
+        <div class="app-icon">✅</div>
+        <div class="app-title">Чек-листы</div>
+        <div class="app-desc">Управление задачами и контроль выполнения: удобный список дел с синхронизацией.</div>
+        <div class="app-link">
+          Открыть приложение
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- ============ ФУТЕР ============ -->
+    <div class="footer">
+      Сделано с <span class="heart">♥</span> · <span id="year"></span> · valeeryyy.ru
+    </div>
+
+  </div>
+
+  <script>
+    // Автоматический год
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
