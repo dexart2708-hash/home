@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Учёт приходов и расходов</title>
+  <title>Валерия Александрова</title>
 
   <script>
     (function() {
@@ -17,11 +17,21 @@
     })();
   </script>
 
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="theme-color" content="#0f172a" id="themeColorMeta">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Валерия">
+
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -35,16 +45,19 @@
       --card-border: rgba(255,255,255,0.8);
       --text: #0f172a; --text-muted: #64748b; --text-subtle: #94a3b8;
       --accent-soft: #f1f5f9;
-      --income: #059669; --income-soft: #ecfdf5; --income-border: #d1fae5; --income-text: #065f46;
-      --expense: #dc2626; --expense-soft: #fef2f2; --expense-border:#fee2e2; --expense-text: #991b1b;
-      --btn-bg-1: #1e293b; --btn-bg-2: #0f172a; --btn-bg-1-h: #334155; --btn-bg-2-h: #1e293b;
+      --income: #059669; --income-soft: #ecfdf5; --income-border: #a7f3d0;
+      --blue: #3b82f6; --blue-soft: #eff6ff; --blue-border: #bfdbfe;
+      --high: #dc2626; --high-soft: #fef2f2; --high-border: #fecaca;
+      --purple: #8b5cf6;
+      --btn-1: #1e293b; --btn-2: #0f172a;
       --shadow-xs: 0 1px 2px rgba(15,23,42,0.04);
       --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
       --shadow-md: 0 4px 6px -1px rgba(15,23,42,0.07), 0 2px 4px -1px rgba(15,23,42,0.04);
       --shadow-lg: 0 10px 15px -3px rgba(15,23,42,0.08), 0 4px 6px -2px rgba(15,23,42,0.04);
       --shadow-xl: 0 20px 25px -5px rgba(15,23,42,0.1), 0 10px 10px -5px rgba(15,23,42,0.04);
+      --shadow-2xl: 0 25px 50px -12px rgba(15,23,42,0.18);
       --shadow-toast: 0 20px 25px -5px rgba(15,23,42,0.15), 0 8px 10px -6px rgba(15,23,42,0.1);
-      --bg-opacity: 0.055; --mark-bg: #fef08a; --kbd-bg: #fafbfc;
+      --bg-opacity: 0.055;
       --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --transition-fast: 0.15s cubic-bezier(0.4,0,0.2,1);
       --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
@@ -59,16 +72,19 @@
       --card-border: rgba(255,255,255,0.08);
       --text: #f1f5f9; --text-muted: #94a3b8; --text-subtle: #64748b;
       --accent-soft: rgba(148,163,184,0.12);
-      --income: #34d399; --income-soft: rgba(5,150,105,0.15); --income-border: rgba(52,211,153,0.35); --income-text: #6ee7b7;
-      --expense: #f87171; --expense-soft: rgba(220,38,38,0.15); --expense-border:rgba(248,113,113,0.35); --expense-text: #fca5a5;
-      --btn-bg-1: #334155; --btn-bg-2: #1e293b; --btn-bg-1-h: #475569; --btn-bg-2-h: #334155;
+      --income: #34d399; --income-soft: rgba(5,150,105,0.15); --income-border: rgba(52,211,153,0.35);
+      --blue: #60a5fa; --blue-soft: rgba(59,130,246,0.15); --blue-border: rgba(96,165,250,0.35);
+      --high: #f87171; --high-soft: rgba(220,38,38,0.15); --high-border: rgba(248,113,113,0.35);
+      --purple: #a78bfa;
+      --btn-1: #334155; --btn-2: #1e293b;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.55), 0 4px 6px -2px rgba(0,0,0,0.35);
       --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.6), 0 10px 10px -5px rgba(0,0,0,0.4);
+      --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.7);
       --shadow-toast: 0 20px 25px -5px rgba(0,0,0,0.6), 0 8px 10px -6px rgba(0,0,0,0.5);
-      --bg-opacity: 0.08; --mark-bg: #facc15; --kbd-bg: #1e293b;
+      --bg-opacity: 0.08;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
@@ -79,260 +95,290 @@
       transition: background-color var(--transition), color var(--transition);
     }
     body {
-      background:
-        radial-gradient(ellipse at top left,    rgba(5, 150, 105, 0.06) 0%, transparent 55%),
-        radial-gradient(ellipse at bottom right, rgba(220, 38, 38, 0.05) 0%, transparent 55%),
-        radial-gradient(ellipse at top right,   rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
-      background-attachment: fixed;
+      display: flex; align-items: center; justify-content: center;
       padding: 40px 24px;
       padding-top: calc(40px + env(safe-area-inset-top));
-      padding-right: calc(24px + env(safe-area-inset-right));
       padding-bottom: calc(40px + env(safe-area-inset-bottom));
       padding-left: calc(24px + env(safe-area-inset-left));
+      padding-right: calc(24px + env(safe-area-inset-right));
+      background:
+        radial-gradient(ellipse at top left, rgba(5,150,105,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at bottom right, rgba(220,38,38,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at top right, rgba(59,130,246,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom left, rgba(139,92,246,0.05) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      background-attachment: fixed;
     }
     body::before {
       content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='340'%20height='340'%20viewBox='0%200%20340%20340'%3E%3Cg%20fill='%230f172a'%20font-family='Georgia,serif'%20font-weight='700'%3E%3Ctext%20x='25'%20y='70'%20font-size='54'%20transform='rotate(-15%2025%2070)'%3E%24%3C/text%3E%3Ctext%20x='220'%20y='55'%20font-size='42'%20transform='rotate(18%20220%2055)'%3E%E2%82%AC%3C/text%3E%3Ctext%20x='100'%20y='185'%20font-size='50'%20transform='rotate(-6%20100%20185)'%3E%E2%82%BD%3C/text%3E%3Ctext%20x='255'%20y='210'%20font-size='46'%20transform='rotate(12%20255%20210)'%3E%C2%A3%3C/text%3E%3Ctext%20x='45'%20y='305'%20font-size='44'%20transform='rotate(22%2045%20305)'%3E%C2%A5%3C/text%3E%3Ctext%20x='225'%20y='320'%20font-size='40'%20transform='rotate(-18%20225%20320)'%3E%E2%82%A3%3C/text%3E%3C/g%3E%3C/svg%3E");
       background-repeat: repeat; background-size: 340px 340px;
       opacity: var(--bg-opacity);
+      animation: bgFloat 90s linear infinite;
+      transition: opacity var(--transition), filter var(--transition);
     }
     [data-theme="dark"] body::before { filter: invert(1); }
+    @keyframes bgFloat { from { background-position: 0 0; } to { background-position: 340px 340px; } }
     body::after {
       content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.25) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+      transition: opacity var(--transition);
     }
     [data-theme="dark"] body::after { opacity: 0; }
-    .container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
 
     .theme-toggle {
+      position: fixed;
+      top: calc(20px + env(safe-area-inset-top));
+      right: calc(20px + env(safe-area-inset-right));
+      z-index: 100;
       width: 44px; height: 44px; border-radius: 50%;
       border: 1px solid var(--border); background: var(--surface);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       color: var(--text); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       box-shadow: var(--shadow-md); transition: all var(--transition);
-      padding: 0; position: relative; overflow: hidden; flex-shrink: 0;
+      padding: 0; overflow: hidden;
     }
     .theme-toggle:hover { transform: scale(1.08) rotate(12deg); box-shadow: var(--shadow-lg); }
-    .theme-toggle:active { transform: scale(0.95); }
     .theme-toggle svg { position: absolute; width: 20px; height: 20px; transition: all var(--transition); }
     .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); color: #f59e0b; }
     .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); color: #60a5fa; }
     [data-theme="dark"] .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
     [data-theme="dark"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
-    .page-header {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; margin-bottom: 32px; padding: 20px 24px;
-      background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border); border-radius: 16px;
-      box-shadow: var(--shadow-sm);
-    }
-    .page-title {
-      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;
-      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .page-subtitle { font-size: 0.875rem; color: var(--text-muted); margin-top: 4px; font-weight: 400; }
-    .user-info { display: flex; align-items: center; gap: 12px; }
-    .user-avatar {
-      width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
-      border: 3px solid var(--surface-solid); box-shadow: var(--shadow-sm);
-      background-color: var(--surface-alt); cursor: pointer; flex-shrink: 0;
-    }
-    .user-name-wrap { display: flex; flex-direction: column; justify-content: center; line-height: 1.25; margin-right: 4px; }
-    .user-name {
-      font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em;
-      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      white-space: nowrap;
-    }
-    .user-role {
-      font-size: 0.6875rem; font-weight: 500; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px;
-    }
-
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes slideIn { from { transform: translateX(110%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(110%); opacity: 0; } }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-
-    .card {
-      background: var(--surface); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--card-border); border-radius: 16px;
-      padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+    /* Экраны авторизации */
+    .auth-screen {
+      display: none; align-items: center; justify-content: center;
+      min-height: 80vh; position: relative; z-index: 1;
       animation: fadeInUp var(--transition-slow) both;
+      width: 100%;
     }
-    .card-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
-    .card-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); display: flex; align-items: center; gap: 8px; }
-    .card-title::before {
-      content: ''; width: 3px; height: 16px;
-      background: linear-gradient(180deg, var(--text) 0%, var(--text-muted) 100%);
-      border-radius: 2px;
+    .auth-screen.visible { display: flex; }
+    .login-card {
+      background: var(--surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 40px; width: 100%; max-width: 420px;
+      box-shadow: var(--shadow-xl); position: relative; overflow: hidden;
     }
-
-    .search-wrap { position: relative; display: flex; align-items: center; max-width: 340px; width: 100%; }
-    .search-icon { position: absolute; left: 14px; width: 16px; height: 16px; color: var(--text-subtle); pointer-events: none; z-index: 1; }
-    .search-input { padding-left: 40px; padding-right: 44px; min-height: 44px; font-size: 0.875rem; background: var(--surface-alt); }
-    .search-input:focus { background: var(--surface-solid); }
-    .search-clear {
-      position: absolute; right: 8px; width: 28px; height: 28px; padding: 0; min-height: auto;
-      background: transparent; color: var(--text-muted); border: none; border-radius: 50%;
-      font-size: 1.25rem; line-height: 1; display: none;
-      align-items: center; justify-content: center; cursor: pointer;
-      box-shadow: none; font-weight: 400;
+    .login-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #059669 0%, #0f172a 50%, #dc2626 100%);
     }
-    .search-clear::after { display: none; }
-    .search-clear:hover { background: var(--accent-soft); color: var(--text); transform: none; box-shadow: none; }
-    .search-clear.visible { display: flex; }
-    .search-hint { display: block; font-size: 0.6875rem; color: var(--text-subtle); margin-top: 12px; font-weight: 500; text-align: right; }
-    .kbd {
-      display: inline-block; padding: 1px 5px; font-family: var(--font);
-      font-size: 0.625rem; font-weight: 600; color: var(--text-muted);
-      background: var(--kbd-bg); border: 1px solid var(--border);
-      border-bottom-width: 2px; border-radius: 4px; margin: 0 2px;
-    }
-    mark { background: var(--mark-bg); color: #1e293b; padding: 1px 3px; border-radius: 3px; font-weight: 600; }
-    .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
-    .field { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 160px; }
-    label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.03em; text-transform: uppercase; }
-    input, select {
-      font-family: var(--font); font-size: 1rem; padding: 12px 14px;
-      color: var(--text); background: var(--surface-solid);
-      border: 1px solid var(--border-strong); border-radius: 8px;
-      outline: none; width: 100%; min-height: 48px;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-    }
-    input:hover, select:hover { border-color: var(--text-subtle); }
-    input:focus, select:focus { border-color: var(--text); box-shadow: 0 0 0 4px rgba(148,163,184,0.15); }
-    input::placeholder { color: var(--text-subtle); }
-    input[type="number"] { font-variant-numeric: tabular-nums; }
-    select {
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px;
-    }
-    [data-theme="dark"] select {
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    }
-    input[type="date"] {
-      -webkit-appearance: none; appearance: none; text-align: left; padding-right: 40px; position: relative;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
-      background-repeat: no-repeat; background-position: right 14px center;
-    }
-    [data-theme="dark"] input[type="date"] {
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
-    }
-    input[type="date"]::-webkit-date-and-time-value { text-align: left; }
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      opacity: 0; position: absolute; right: 0; top: 0;
-      width: 100%; height: 100%; cursor: pointer; z-index: 2;
-    }
-    button {
-      font-family: var(--font); font-size: 0.875rem; font-weight: 600;
-      padding: 12px 22px; border: 1px solid transparent; border-radius: 8px;
-      cursor: pointer; white-space: nowrap;
-      background: linear-gradient(180deg, var(--btn-bg-1) 0%, var(--btn-bg-2) 100%);
-      color: #fff; min-height: 48px;
+    .login-logo { text-align: center; margin-bottom: 28px; }
+    .login-logo-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
-      transition: all var(--transition-fast);
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--btn-1) 0%, var(--btn-2) 100%);
+      border-radius: 18px; font-size: 1.75rem; margin-bottom: 16px;
+      box-shadow: var(--shadow-md); color: #fff;
     }
-    button::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-      opacity: 0; transition: opacity var(--transition-fast); pointer-events: none;
+    .login-title { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); text-align: center; }
+    .login-subtitle { font-size: 0.875rem; color: var(--text-muted); text-align: center; margin-top: 6px; line-height: 1.5; }
+    .login-form .field { margin-bottom: 16px; }
+    .login-form button { width: 100%; }
+    .login-error {
+      background: var(--high-soft); color: var(--high);
+      border: 1px solid var(--high-border); padding: 12px 16px;
+      border-radius: 8px; font-size: 0.8125rem; font-weight: 500;
+      margin-bottom: 16px; display: none;
     }
-    button:hover {
-      background: linear-gradient(180deg, var(--btn-bg-1-h) 0%, var(--btn-bg-2-h) 100%);
-      box-shadow: var(--shadow-md); transform: translateY(-1px);
+    .login-error.visible { display: block; }
+    #qrcode { display: inline-block; padding: 12px; background: #fff; border-radius: 12px; box-shadow: var(--shadow-sm); }
+    #qrcode img, #qrcode canvas { display: block; }
+    .totp-secret {
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.875rem;
+      letter-spacing: 2px; color: var(--text); font-weight: 600;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; display: inline-block;
+      margin-top: 6px; user-select: all; word-break: break-all;
     }
-    button:hover::after { opacity: 1; }
-    button:active { transform: translateY(0) scale(0.98); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    button.secondary { background: var(--surface-solid); color: var(--text); border-color: var(--border-strong); box-shadow: var(--shadow-xs); }
-    button.secondary:hover { background: var(--surface-hover); border-color: var(--text-subtle); }
-    button.success { background: var(--surface-solid); color: var(--income); border-color: var(--income-border); box-shadow: var(--shadow-xs); }
-    button.success:hover { background: var(--income-soft); border-color: var(--income); }
 
-    .table-wrap {
-      background: var(--surface-solid); border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-xs);
+    .page {
+      position: relative; z-index: 1;
+      max-width: 760px; width: 100%;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      display: none;
     }
-    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-    thead th {
-      background: var(--surface-alt); font-weight: 600; font-size: 0.6875rem;
-      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
-      text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--border); white-space: nowrap;
-    }
-    tbody td { padding: 16px 18px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: var(--surface-hover); }
-    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-    .income  { color: var(--income);  font-weight: 600; }
-    .expense { color: var(--expense); font-weight: 600; }
-    .badge { display: inline-block; font-size: 0.6875rem; font-weight: 600; padding: 5px 12px; border-radius: 6px; white-space: nowrap; }
-    .badge-income  { background: var(--income-soft); color: var(--income-text); border: 1px solid var(--income-border); }
-    .badge-expense { background: var(--expense-soft); color: var(--expense-text); border: 1px solid var(--expense-border); }
-    .note-input {
-      width: 100%; min-height: 38px; padding: 8px 12px;
-      font-family: var(--font); font-size: 0.8125rem;
-      color: var(--text); background: transparent;
-      border: 1px solid transparent; border-radius: 8px;
-      outline: none; transition: all var(--transition-fast);
-    }
-    .note-input:hover { background: var(--surface-hover); border-color: var(--border); }
-    .note-input:focus { background: var(--surface-solid); border-color: var(--text); box-shadow: 0 0 0 3px rgba(148,163,184,0.15); }
-    .note-input::placeholder { color: var(--text-subtle); font-style: italic; }
-    .report { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .report-item {
-      background: linear-gradient(180deg, var(--surface-alt) 0%, var(--surface-solid) 100%);
-      border: 1px solid var(--border); border-radius: 12px;
-      padding: 24px; transition: all var(--transition);
+    .page.visible { display: block; }
+
+    .header {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      margin-bottom: 32px; padding: 40px 32px 36px;
+      background: var(--surface);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border); border-radius: 28px;
+      box-shadow: var(--shadow-lg);
       position: relative; overflow: hidden;
     }
-    .report-item::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 3px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 100%);
+    .header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #059669 0%, #3b82f6 33%, #8b5cf6 66%, #dc2626 100%);
+      background-size: 200% 100%;
+      animation: gradientShift 6s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .avatar-wrap {
+      position: relative; margin-bottom: 20px;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none; -webkit-user-select: none;
+      transition: transform 0.1s ease;
+    }
+    .avatar-wrap::before {
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      background: linear-gradient(135deg, #059669 0%, #3b82f6 50%, #8b5cf6 100%);
+      opacity: 0.2;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.08); opacity: 0.32; }
+    }
+    .avatar {
+      position: relative; width: 96px; height: 96px; border-radius: 50%;
+      object-fit: cover; border: 4px solid var(--surface-solid);
+      box-shadow: var(--shadow-lg); background: var(--surface-alt);
+      pointer-events: none;
+      display: block;
+    }
+    .name {
+      font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .tagline { font-size: 0.9375rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+    .location {
+      font-size: 0.8125rem; color: var(--text-subtle); font-weight: 500;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 6px; padding: 4px 12px;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+    .location svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .install-banner {
+      display: none; align-items: center; gap: 14px;
+      margin-bottom: 24px; padding: 16px 20px;
+      background: var(--surface);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border); border-radius: 16px;
+      box-shadow: var(--shadow-md);
+    }
+    .install-banner.visible { display: flex; }
+    .install-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, #ecfdf5 0%, #dbeafe 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; flex-shrink: 0;
+    }
+    .install-text { flex: 1; min-width: 0; }
+    .install-text strong { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .install-text span { font-size: 0.75rem; color: var(--text-muted); }
+    .install-btn {
+      padding: 8px 18px; border: none; border-radius: 8px;
+      background: linear-gradient(180deg, var(--btn-1) 0%, var(--btn-2) 100%);
+      color: #fff; font-family: var(--font); font-size: 0.8125rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition-fast); white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      text-align: center; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+    .section-title::before, .section-title::after {
+      content: ''; flex: 1; max-width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .app-card {
+      display: flex; flex-direction: column; padding: 28px 26px;
+      background: var(--surface);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border); border-radius: 20px;
+      box-shadow: var(--shadow-md); text-decoration: none; color: inherit;
+      position: relative; overflow: hidden; transition: all var(--transition); cursor: pointer;
+    }
+    .app-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
       opacity: 0; transition: opacity var(--transition);
     }
-    .report-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-    .report-item:hover::before { opacity: 1; }
-    .report-item.income-item::before { background: linear-gradient(90deg, #34d399 0%, #059669 100%); }
-    .report-item.expense-item::before { background: linear-gradient(90deg, #f87171 0%, #dc2626 100%); }
-    .report-item .label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-    .report-item .value { font-size: 1.875rem; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.1; color: var(--text); }
-    .report-item .value.income  { color: var(--income); }
-    .report-item .value.expense { color: var(--expense); }
-    .empty { text-align: center; padding: 56px 20px; color: var(--text-muted); font-size: 0.875rem; }
-    .empty::before { content: '📭'; display: block; font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
-    .empty.searching::before { content: '🔍'; }
-    .empty .empty-query {
-      display: inline-block; font-weight: 600; color: var(--text);
-      background: var(--surface-alt); padding: 1px 8px; border-radius: 4px;
-      border: 1px solid var(--border); font-style: normal; margin-top: 4px;
+    .app-card.finance::before { background: linear-gradient(90deg, #34d399 0%, #059669 100%); }
+    .app-card.planner::before { background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%); }
+    .app-card.check::before { background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%); }
+    .app-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-2xl); }
+    .app-card:hover::before { opacity: 1; }
+    .app-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem; margin-bottom: 18px;
     }
-    .actions { display: flex; gap: 6px; justify-content: flex-end; }
-    .actions button {
-      padding: 0; width: 34px; height: 34px;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: transparent; color: var(--text-muted);
-      border: 1px solid transparent; border-radius: 8px;
-      font-size: 0.875rem; min-height: auto; box-shadow: none;
+    .app-card.finance .app-icon { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); color: #047857; box-shadow: 0 4px 14px rgba(5,150,105,0.15); }
+    .app-card.planner .app-icon { background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); color: #7c3aed; box-shadow: 0 4px 14px rgba(139,92,246,0.15); }
+    .app-card.check .app-icon { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); color: #2563eb; box-shadow: 0 4px 14px rgba(59,130,246,0.15); }
+    [data-theme="dark"] .app-card.finance .app-icon { background: linear-gradient(135deg, rgba(5,150,105,0.2) 0%, rgba(52,211,153,0.15) 100%); color: #34d399; }
+    [data-theme="dark"] .app-card.planner .app-icon { background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(167,139,250,0.15) 100%); color: #a78bfa; }
+    [data-theme="dark"] .app-card.check .app-icon { background: linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(96,165,250,0.15) 100%); color: #60a5fa; }
+    .app-title { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 6px; }
+    .app-desc { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 18px; }
+    .app-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8125rem; font-weight: 600;
+      padding: 8px 14px; border-radius: 8px;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      color: var(--text); transition: all var(--transition-fast); align-self: flex-start;
     }
-    .actions button::after { display: none; }
-    .actions button:hover { background: var(--accent-soft); color: var(--text); border-color: var(--border); transform: scale(1.08); }
-    .actions .delete-btn:hover { background: var(--expense-soft); color: var(--expense); border-color: var(--expense-border); }
-    .load-more-wrap { display: flex; justify-content: center; padding: 20px; border-top: 1px solid var(--border); background: var(--surface-alt); }
-    .load-more-wrap button { background: var(--surface-solid); color: var(--text); border: 1px solid var(--border-strong); padding: 10px 28px; min-height: 44px; }
-    .editing-badge {
-      display: inline-block; font-size: 0.75rem; font-weight: 600;
-      color: #92400e; background: #fffbeb; border: 1px solid #fde68a;
-      padding: 3px 10px; border-radius: 6px; margin-left: 8px;
-      animation: pulse 2s ease-in-out infinite;
+    .app-card.finance:hover .app-link { background: var(--income-soft); border-color: var(--income-border); color: var(--income); transform: translateX(4px); }
+    .app-card.planner:hover .app-link { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.35); color: var(--purple); transform: translateX(4px); }
+    .app-card.check:hover .app-link { background: var(--blue-soft); border-color: var(--blue-border); color: var(--blue); transform: translateX(4px); }
+    .app-link svg { width: 12px; height: 12px; }
+
+    .footer {
+      text-align: center; padding: 24px 20px;
+      font-size: 0.75rem; color: var(--text-subtle); font-weight: 500;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
     }
-    .toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
+    .footer .heart { color: #dc2626; display: inline-block; animation: heartbeat 1.6s ease-in-out infinite; }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.2); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .logout-btn {
+      position: fixed;
+      bottom: calc(20px + env(safe-area-inset-bottom));
+      right: calc(20px + env(safe-area-inset-right));
+      z-index: 100;
+      padding: 8px 16px; min-height: 40px;
+      border: 1px solid var(--high-border); background: var(--surface-solid);
+      color: var(--high); font-family: var(--font); font-size: 0.8125rem; font-weight: 600;
+      border-radius: 8px; cursor: pointer;
+      box-shadow: var(--shadow-sm); transition: all var(--transition-fast);
+    }
+    .logout-btn:hover { background: var(--high-soft); border-color: var(--high); }
+
+    .toast-container {
+      position: fixed; top: 24px; right: 24px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 12px; pointer-events: none;
+    }
     .toast {
       pointer-events: auto; min-width: 300px; max-width: 420px;
       background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -343,179 +389,235 @@
       border-left: 4px solid var(--text);
     }
     .toast.success { border-left-color: var(--income); }
-    .toast.error { border-left-color: var(--expense); }
+    .toast.error { border-left-color: var(--high); }
     .toast.info { border-left-color: #3b82f6; }
     .toast-icon { font-size: 1.125rem; line-height: 1.4; }
     .toast-message { flex: 1; word-break: break-word; line-height: 1.4; }
     .toast.hiding { animation: slideOut 0.3s ease forwards; }
-    @media (max-width: 720px) {
-      body { padding: 16px 12px; padding-top: calc(16px + env(safe-area-inset-top)); padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
-      .row { flex-direction: column; align-items: stretch; gap: 14px; }
-      .field { min-width: 100%; }
-      .report { grid-template-columns: 1fr; gap: 12px; }
-      .page-title { font-size: 1.25rem; }
-      .report-item .value { font-size: 1.5rem; }
-      .card { padding: 20px; border-radius: 12px; }
-      .page-header { margin-bottom: 24px; padding: 16px; border-radius: 12px; }
-      .card-header { gap: 14px; }
-      .search-wrap { max-width: 100%; }
-      .user-info { gap: 8px; }
-      .user-avatar { width: 42px; height: 42px; border-width: 2px; }
-      .user-role { display: none; }
-      .user-name { font-size: 0.875rem; }
-      .theme-toggle { width: 40px; height: 40px; }
+    @keyframes slideIn { from { transform: translateX(110%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(110%); opacity: 0; } }
+
+    /* Универсальные стили для полей и кнопок авторизации */
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.03em; text-transform: uppercase; }
+    input, select {
+      font-family: var(--font); font-size: 1rem; padding: 12px 14px;
+      color: var(--text); background: var(--surface-solid);
+      border: 1px solid var(--border-strong); border-radius: 8px;
+      outline: none; width: 100%; min-height: 48px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    input:focus { border-color: var(--text); box-shadow: 0 0 0 4px rgba(148,163,184,0.15); }
+    button {
+      font-family: var(--font); font-size: 0.875rem; font-weight: 600;
+      padding: 12px 22px; border: 1px solid transparent; border-radius: 8px;
+      cursor: pointer; white-space: nowrap;
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #fff; min-height: 48px;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+    }
+    button:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); filter: brightness(1.05); }
+    button:active { transform: translateY(0) scale(0.98); }
+    button.secondary {
+      background: var(--surface-solid); color: var(--text);
+      border-color: var(--border-strong); box-shadow: var(--shadow-xs);
+    }
+    button.secondary:hover { background: var(--surface-hover); border-color: var(--text-subtle); filter: none; }
+
+    @media (max-width: 640px) {
+      body { padding: 20px 16px; padding-top: calc(20px + env(safe-area-inset-top)); padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+      body::before { background-size: 260px 260px; }
+      .theme-toggle { top: calc(14px + env(safe-area-inset-top)); right: calc(14px + env(safe-area-inset-right)); width: 40px; height: 40px; }
       .theme-toggle svg { width: 18px; height: 18px; }
-      th:nth-child(1), td:nth-child(1) { display: none; }
-      th:nth-child(6), td:nth-child(6) { display: none; }
-      th:nth-child(8), td:nth-child(8) { display: none; }
-      thead th, tbody td { padding: 12px 10px; font-size: 0.8125rem; }
-      .badge { font-size: 0.625rem; padding: 4px 8px; }
+      .header { padding: 32px 24px 28px; border-radius: 22px; }
+      .avatar { width: 80px; height: 80px; border-width: 3px; }
+      .avatar-wrap::before { inset: -4px; }
+      .name { font-size: 1.625rem; }
+      .tagline { font-size: 0.875rem; }
+      .apps-grid { grid-template-columns: 1fr; gap: 14px; }
+      .app-card { padding: 24px 22px; }
+      .app-icon { width: 48px; height: 48px; font-size: 1.5rem; border-radius: 14px; margin-bottom: 14px; }
+      .app-title { font-size: 1.0625rem; }
+      .section-title::before, .section-title::after { max-width: 40px; }
+      .login-card { padding: 28px 24px; }
       .toast-container { top: 12px; right: 12px; left: 12px; }
       .toast { min-width: auto; width: 100%; }
     }
-    @media (max-width: 380px) { th:nth-child(4), td:nth-child(4) { display: none; } }
   </style>
 </head>
 <body>
 
 <div id="toastContainer" class="toast-container"></div>
 
-<div class="container">
-
-  <div class="page-header">
-    <div>
-      <div class="page-title">Учёт приходов и расходов</div>
-      <div class="page-subtitle">Финансовый реестр операций</div>
+<!-- ЭКРАН ВХОДА -->
+<div id="loginScreen" class="auth-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">🔐</div>
+      <div class="login-title">Вход</div>
+      <div class="login-subtitle">Введите email и пароль</div>
     </div>
-    <div class="user-info">
-      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <img src="avatar.jpg" alt="Пользователь" class="user-avatar" onerror="this.src='https://i.pravatar.cc/150?img=44'">
-      <div class="user-name-wrap">
-        <div class="user-name">Валерия Александрова</div>
-        <div class="user-role">Владелец</div>
+    <div id="loginError" class="login-error"></div>
+    <form class="login-form" id="loginForm">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="your-email@mail.ru" required autocomplete="username">
       </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="card-title" id="formTitle">Новая запись</div></div>
-    <form id="addForm">
-      <div class="row">
-        <div class="field">
-          <label>Месяц</label>
-          <select id="month" required><option value="">— выберите —</option></select>
-        </div>
-        <div class="field"><label>Дата</label><input type="date" id="date" required></div>
-        <div class="field">
-          <label>Тип операции</label>
-          <select id="type" required>
-            <option value="income">Приход</option>
-            <option value="expense">Расход</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Статья</label>
-          <input type="text" id="category" list="category-list" placeholder="Зарплата, аренда…" required>
-          <datalist id="category-list"></datalist>
-        </div>
-        <div class="field"><label>Сумма, ₽</label><input type="number" id="amount" step="0.01" min="0" placeholder="0.00" required></div>
-        <div class="field" style="flex:2;"><label>Назначение</label><input type="text" id="description" placeholder="Комментарий к операции"></div>
-        <button type="submit" id="submitBtn">Добавить</button>
-        <button type="button" class="secondary" id="cancelEditBtn" style="display:none;">Отмена</button>
+      <div class="field" style="margin-top:16px;">
+        <label>Пароль</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
       </div>
+      <button type="submit" id="loginBtn" style="width:100%; margin-top:20px;">Войти</button>
     </form>
   </div>
-
-  <div class="card">
-    <div class="card-header"><div class="card-title">Фильтры</div></div>
-    <div class="row">
-      <div class="field">
-        <label>Тип операции</label>
-        <select id="filterType">
-          <option value="all">Все</option>
-          <option value="income">Только приходы</option>
-          <option value="expense">Только расходы</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Статья</label>
-        <select id="filterCategory"><option value="all">Все статьи</option></select>
-      </div>
-      <div class="field"><label>Дата от</label><input type="date" id="filterDateFrom"></div>
-      <div class="field"><label>Дата до</label><input type="date" id="filterDateTo"></div>
-      <button class="secondary" id="resetFilters">Сбросить</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">Отчёт за период</div>
-      <button class="success" id="exportBtn">Экспорт в Excel</button>
-    </div>
-    <div class="report">
-      <div class="report-item income-item"><div class="label">Приходы</div><div class="value income" id="reportIncome">0,00</div></div>
-      <div class="report-item expense-item"><div class="label">Расходы</div><div class="value expense" id="reportExpense">0,00</div></div>
-      <div class="report-item"><div class="label">Баланс</div><div class="value" id="reportBalance">0,00</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">Реестр операций</div>
-      <div class="search-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="7"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="searchInput" class="search-input" placeholder="Поиск по таблице…" autocomplete="off">
-        <button type="button" class="search-clear" id="searchClear" aria-label="Очистить">×</button>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Месяц</th><th>Дата</th><th>Тип</th><th>Статья</th>
-            <th class="num">Сумма, ₽</th><th>Назначение</th><th style="width:80px;"></th><th>Заметка</th>
-          </tr>
-        </thead>
-        <tbody id="recordsBody"></tbody>
-      </table>
-      <div class="empty" id="emptyMsg" style="display:none;">Записей нет</div>
-      <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-        <button class="secondary" id="loadMoreBtn">Показать ещё 50</button>
-      </div>
-    </div>
-    <div class="search-hint">Подсказка: <span class="kbd">Ctrl</span> + <span class="kbd">K</span> — быстрый поиск</div>
-  </div>
-
 </div>
+
+<!-- ЭКРАН MFA -->
+<div id="mfaScreen" class="auth-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">📱</div>
+      <div class="login-title">Двухфакторная аутентификация</div>
+      <div class="login-subtitle">Введите 6-значный код из Google Authenticator</div>
+    </div>
+    <div id="mfaError" class="login-error"></div>
+    <form id="mfaForm">
+      <div class="field">
+        <label>Код из приложения</label>
+        <input type="text" id="mfaCode" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]*" required autocomplete="one-time-code">
+      </div>
+      <button type="submit" id="mfaBtn" style="width:100%; margin-top:20px;">Подтвердить</button>
+      <button type="button" class="secondary" id="mfaCancelBtn" style="width:100%; margin-top:8px;">Отмена</button>
+    </form>
+  </div>
+</div>
+
+<!-- ЭКРАН РЕГИСТРАЦИИ TOTP -->
+<div id="enrollScreen" class="auth-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">📲</div>
+      <div class="login-title">Настройка 2FA</div>
+      <div class="login-subtitle">Отсканируйте QR-код в Google Authenticator</div>
+    </div>
+    <div id="enrollError" class="login-error"></div>
+    <div style="text-align:center; margin-bottom:20px;">
+      <div id="qrcode"></div>
+    </div>
+    <p style="font-size:0.8125rem; color:var(--text-muted); text-align:center; margin-bottom:16px; line-height:1.6;">
+      Если не можете отсканировать — введите ключ вручную:<br>
+      <span class="totp-secret" id="totpSecret"></span>
+    </p>
+    <form id="enrollForm">
+      <div class="field">
+        <label>Введите код из приложения</label>
+        <input type="text" id="enrollCode" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]*" required autocomplete="one-time-code">
+      </div>
+      <button type="submit" id="enrollBtn" style="width:100%; margin-top:20px;">Завершить настройку</button>
+    </form>
+  </div>
+</div>
+
+<!-- ВИЗИТКА -->
+<div class="page" id="mainPage">
+
+  <div class="header">
+    <div class="avatar-wrap">
+      <img src="avatar.jpg" alt="Валерия Александрова" class="avatar" onerror="this.src='https://i.pravatar.cc/300?img=44'">
+    </div>
+    <h1 class="name">Валерия Александрова</h1>
+    <p class="tagline">Веб-разработчик · Автор проектов</p>
+    <span class="location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      valeeryyy.ru
+    </span>
+  </div>
+
+  <div class="install-banner" id="installBanner">
+    <div class="install-icon">📲</div>
+    <div class="install-text">
+      <strong>Установить как приложение</strong>
+      <span>Быстрый доступ с главного экрана</span>
+    </div>
+    <button class="install-btn" id="installBtn">Установить</button>
+  </div>
+
+  <div class="section-title">Мои приложения</div>
+
+  <div class="apps-grid">
+    <a href="https://dexart2708-hash.github.io/finance-app/" class="app-card finance">
+      <div class="app-icon">💰</div>
+      <div class="app-title">Учёт финансов</div>
+      <div class="app-desc">Приходы и расходы, отчёты, экспорт в Excel, поиск и заметки.</div>
+      <div class="app-link">
+        Открыть
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </a>
+
+    <a href="https://dexart2708-hash.github.io/planner-app/" class="app-card planner">
+      <div class="app-icon">📝</div>
+      <div class="app-title">Планер</div>
+      <div class="app-desc">Задачи, напоминания, приоритеты, поиск, экспорт и печать.</div>
+      <div class="app-link">
+        Открыть
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </a>
+
+    <a href="https://check.valeeryyy.ru" class="app-card check">
+      <div class="app-icon">✅</div>
+      <div class="app-title">Чек-листы</div>
+      <div class="app-desc">Управление задачами и контроль выполнения.</div>
+      <div class="app-link">
+        Открыть
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <div class="footer">
+    Сделано с <span class="heart">♥</span> · <span id="year"></span> · valeeryyy.ru
+  </div>
+
+  <button class="logout-btn" id="logoutBtn">Выйти</button>
+</div>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" style="display:none;">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {
-  initializeFirestore,
-  persistentLocalCache,
-  persistentMultipleTabManager,
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  serverTimestamp
-} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  multiFactor,
+  getMultiFactorResolver,
+  TotpMultiFactorGenerator
+} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDdm0kaIesCu4CBennxPVoPhXwyAyAiwIg",
@@ -527,22 +629,40 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-});
+const auth = getAuth(app);
+console.log('[INIT] Визитка запущена');
 
-const COLLECTION = 'finance_records';
-console.log('[INIT] Финансы запущены (без авторизации)');
+let mfaResolver = null;
+let totpSecret = null;
+let mfaJustCompleted = false;
 
-let allRecords = [];
-let unsubscribe = null;
-let editingId = null;
-let limitCount = 50;
-const LIMIT_STEP = 50;
-let lastDocCount = 0;
-let searchQuery = '';
-let searchTimeout = null;
+// ==================== ЭКРАНЫ ====================
+function showScreen(screen) {
+  document.querySelectorAll('.auth-screen').forEach(el => el.classList.remove('visible'));
+  document.getElementById('mainPage').classList.remove('visible');
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.style.display = 'none';
+  if (screen === 'login') document.getElementById('loginScreen').classList.add('visible');
+  if (screen === 'mfa') document.getElementById('mfaScreen').classList.add('visible');
+  if (screen === 'enroll') document.getElementById('enrollScreen').classList.add('visible');
+  if (screen === 'app') {
+    document.getElementById('mainPage').classList.add('visible');
+    themeToggle.style.display = 'flex';
+  }
+}
 
+function showLogin() {
+  showScreen('login');
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('loginError').classList.remove('visible');
+}
+
+function showApp() {
+  showScreen('app');
+}
+
+// ==================== TOAST ====================
 function showToast(message, type = 'info') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
@@ -558,327 +678,247 @@ function showToast(message, type = 'info') {
   }, 3500);
 }
 
-document.getElementById('themeToggle').addEventListener('click', () => {
+// ==================== ФОРМА ВХОДА ====================
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  const errBox = document.getElementById('loginError');
+
+  errBox.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Проверка…';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    if (err.code === 'auth/multi-factor-auth-required') {
+      mfaResolver = getMultiFactorResolver(auth, err);
+      showScreen('mfa');
+      document.getElementById('mfaCode').value = '';
+      document.getElementById('mfaError').classList.remove('visible');
+      setTimeout(() => document.getElementById('mfaCode').focus(), 100);
+    } else {
+      let msg = 'Не удалось войти.';
+      if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') msg = 'Неверный email или пароль.';
+      else if (err.code === 'auth/user-not-found') msg = 'Пользователь не найден.';
+      else if (err.code === 'auth/invalid-email') msg = 'Некорректный email.';
+      else if (err.code === 'auth/too-many-requests') msg = 'Слишком много попыток. Попробуйте позже.';
+      else if (err.code === 'auth/network-request-failed') msg = 'Нет соединения. Проверьте интернет.';
+      else msg = err.message;
+      errBox.textContent = msg;
+      errBox.classList.add('visible');
+      document.getElementById('loginPassword').value = '';
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Войти';
+  }
+});
+
+// ==================== MFA ====================
+document.getElementById('mfaForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const code = document.getElementById('mfaCode').value.trim();
+  const btn = document.getElementById('mfaBtn');
+  const errBox = document.getElementById('mfaError');
+
+  if (!code || code.length !== 6) {
+    errBox.textContent = 'Введите 6-значный код.';
+    errBox.classList.add('visible');
+    return;
+  }
+
+  errBox.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Проверка…';
+
+  try {
+    const hint = mfaResolver.hints.find(h => h.factorId === 'totp');
+    if (!hint) throw new Error('TOTP-фактор не найден');
+    const assertion = TotpMultiFactorGenerator.assertionForSignIn(hint.uid, code);
+    await mfaResolver.resolveSignIn(assertion);
+    mfaJustCompleted = true;
+    if (auth.currentUser) {
+      try { await auth.currentUser.getIdToken(true); } catch (e) {}
+      try { await auth.currentUser.reload(); } catch (e) {}
+    }
+    showToast('Вход выполнен!', 'success');
+  } catch (err) {
+    console.error('MFA error:', err);
+    errBox.textContent = 'Неверный код. Попробуйте ещё раз.';
+    errBox.classList.add('visible');
+    document.getElementById('mfaCode').value = '';
+    document.getElementById('mfaCode').focus();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Подтвердить';
+  }
+});
+
+document.getElementById('mfaCancelBtn').addEventListener('click', async () => {
+  mfaResolver = null;
+  try { await signOut(auth); } catch (e) {}
+  showLogin();
+});
+
+// ==================== РЕГИСТРАЦИЯ TOTP ====================
+async function startEnrollment(user) {
+  try {
+    try { await user.getIdToken(true); } catch (e) {}
+    try { await user.reload(); } catch (e) {}
+    const fresh = auth.currentUser;
+    const existing = fresh.multiFactor?.enrolledFactors || [];
+    if (existing.length > 0) { showApp(); return; }
+
+    const mfUser = multiFactor(fresh);
+    const multiFactorSession = await mfUser.getSession();
+    totpSecret = await TotpMultiFactorGenerator.generateSecret(multiFactorSession);
+
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = '';
+    const qrUrl = totpSecret.generateQrCodeUrl(fresh.email, 'Valeeryyy');
+    new QRCode(qrContainer, { text: qrUrl, width: 180, height: 180 });
+    document.getElementById('totpSecret').textContent = totpSecret.secretKey;
+
+    showScreen('enroll');
+    document.getElementById('enrollCode').value = '';
+    document.getElementById('enrollError').classList.remove('visible');
+    setTimeout(() => document.getElementById('enrollCode').focus(), 100);
+  } catch (err) {
+    console.error('[2FA] Ошибка:', err);
+    if (err.code === 'auth/maximum-second-factor-count-exceeded' ||
+        (err.message && err.message.includes('Too many'))) {
+      showApp();
+      return;
+    }
+    const errBox = document.getElementById('loginError');
+    errBox.innerHTML = 'Ошибка 2FA: <strong>' + err.message + '</strong>';
+    errBox.classList.add('visible');
+    showScreen('login');
+    try { await signOut(auth); } catch (e) {}
+  }
+}
+
+document.getElementById('enrollForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const code = document.getElementById('enrollCode').value.trim();
+  const btn = document.getElementById('enrollBtn');
+  const errBox = document.getElementById('enrollError');
+
+  if (!code || code.length !== 6) {
+    errBox.textContent = 'Введите 6-значный код.';
+    errBox.classList.add('visible');
+    return;
+  }
+
+  errBox.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Сохранение…';
+
+  try {
+    const mfUser = multiFactor(auth.currentUser);
+    const assertion = TotpMultiFactorGenerator.assertionForEnrollment(totpSecret, code);
+    await mfUser.enroll(assertion, 'Google Authenticator');
+    try { await auth.currentUser.getIdToken(true); } catch (e) {}
+    try { await auth.currentUser.reload(); } catch (e) {}
+    mfaJustCompleted = true;
+    showToast('2FA успешно настроена!', 'success');
+    showApp();
+  } catch (err) {
+    console.error('Ошибка TOTP:', err);
+    errBox.textContent = 'Неверный код. Проверьте и попробуйте снова.';
+    errBox.classList.add('visible');
+    document.getElementById('enrollCode').value = '';
+    document.getElementById('enrollCode').focus();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Завершить настройку';
+  }
+});
+
+// ==================== ВЫХОД ====================
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  if (!confirm('Выйти?')) return;
+  try {
+    await signOut(auth);
+    showToast('Вы вышли', 'info');
+  } catch (err) {
+    showToast('Ошибка: ' + err.message, 'error');
+  }
+});
+
+// ==================== ОТСЛЕЖИВАНИЕ ====================
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    if (mfaJustCompleted) {
+      mfaJustCompleted = false;
+      showApp();
+      return;
+    }
+    try { await user.getIdToken(true); } catch (e) {}
+    try { await user.reload(); } catch (e) {}
+    const fresh = auth.currentUser;
+    const factors = fresh.multiFactor?.enrolledFactors || [];
+    console.log('[AUTH] Вошёл:', fresh.email, '| TOTP:', factors.length);
+    if (factors.length === 0) {
+      if (window.__enrolling) return;
+      window.__enrolling = true;
+      try { await startEnrollment(fresh); } finally { window.__enrolling = false; }
+    } else {
+      showApp();
+    }
+  } else {
+    showLogin();
+  }
+});
+
+// ==================== ДОПОЛНИТЕЛЬНО ====================
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Тема
+const themeToggle = document.getElementById('themeToggle');
+const themeColorMeta = document.getElementById('themeColorMeta');
+function applyThemeColor(theme) {
+  themeColorMeta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#ffffff');
+}
+applyThemeColor(document.documentElement.getAttribute('data-theme'));
+themeToggle.addEventListener('click', () => {
   const current = document.documentElement.getAttribute('data-theme');
   const next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
+  applyThemeColor(next);
 });
 
-const numberFormatter = new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-function fmt(n) { return numberFormatter.format(Number(n) || 0); }
-
-function populateMonthSelect() {
-  const select = document.getElementById('month');
-  const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-  const currentYear = new Date().getFullYear();
-  const years = [currentYear, currentYear - 1, currentYear - 2, currentYear + 1];
-  let html = '<option value="">— выберите —</option>';
-  years.forEach((y, idx) => {
-    const label = idx === 0 ? `${y} — текущий` : `${y}`;
-    html += `<optgroup label="${label}">`;
-    monthNames.forEach(m => { html += `<option value="${m} ${y}">${m} ${y}</option>`; });
-    html += `</optgroup>`;
-  });
-  select.innerHTML = html;
-}
-
-function subscribeToRecords() {
-  if (unsubscribe) unsubscribe();
-  const q = query(collection(db, COLLECTION), orderBy('date', 'desc'), limit(limitCount));
-  unsubscribe = onSnapshot(q, snapshot => {
-    lastDocCount = snapshot.docs.length;
-    allRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    populateCategoryFilter();
-    populateCategoryDatalist();
-    render();
-  }, err => {
-    console.error('Ошибка загрузки:', err);
-    showToast('Не удалось загрузить данные.', 'error');
+// Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW:', err));
   });
 }
 
-function populateCategoryDatalist() {
-  const datalist = document.getElementById('category-list');
-  const categories = [...new Set(allRecords.map(r => r.category).filter(Boolean))].sort();
-  datalist.innerHTML = categories.map(c => `<option value="${c}">`).join('');
-}
-
-function populateCategoryFilter() {
-  const select = document.getElementById('filterCategory');
-  const current = select.value;
-  const categories = [...new Set(allRecords.map(r => r.category).filter(Boolean))].sort();
-  select.innerHTML = '<option value="all">Все статьи</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
-  if (categories.includes(current)) select.value = current;
-}
-
-const searchInput = document.getElementById('searchInput');
-const searchClear = document.getElementById('searchClear');
-searchInput.addEventListener('input', (e) => {
-  const val = e.target.value;
-  searchClear.classList.toggle('visible', val.length > 0);
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    searchQuery = val.trim().toLowerCase();
-    render();
-  }, 250);
-});
-searchClear.addEventListener('click', () => {
-  searchInput.value = '';
-  searchQuery = '';
-  searchClear.classList.remove('visible');
-  searchInput.focus();
-  render();
-});
-
-document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-    e.preventDefault();
-    searchInput.focus();
-    searchInput.select();
-  }
-  if (e.key === 'Escape' && document.activeElement === searchInput) {
-    if (searchInput.value) {
-      searchInput.value = '';
-      searchQuery = '';
-      searchClear.classList.remove('visible');
-      render();
-    } else {
-      searchInput.blur();
-    }
-  }
-});
-
-function getFiltered() {
-  const type = document.getElementById('filterType').value;
-  const category = document.getElementById('filterCategory').value;
-  const dateFrom = document.getElementById('filterDateFrom').value;
-  const dateTo = document.getElementById('filterDateTo').value;
-  return allRecords.filter(r => {
-    if (type !== 'all' && r.type !== type) return false;
-    if (category !== 'all' && r.category !== category) return false;
-    if (dateFrom && r.date < dateFrom) return false;
-    if (dateTo && r.date > dateTo) return false;
-    if (searchQuery) {
-      const haystack = [
-        r.month, r.date, r.category, r.description, r.note,
-        r.type === 'income' ? 'приход' : 'расход',
-        String(r.amount || '')
-      ].map(v => String(v == null ? '' : v).toLowerCase()).join(' ');
-      if (!haystack.includes(searchQuery)) return false;
-    }
-    return true;
-  });
-}
-
-function esc(s) {
-  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-function highlight(text, query) {
-  const str = String(text == null ? '' : text);
-  if (!query) return esc(str);
-  const lowerStr = str.toLowerCase();
-  const lowerQuery = query.toLowerCase();
-  let result = '';
-  let lastIndex = 0;
-  let index = lowerStr.indexOf(lowerQuery);
-  while (index !== -1) {
-    result += esc(str.slice(lastIndex, index));
-    result += '<mark>' + esc(str.slice(index, index + query.length)) + '</mark>';
-    lastIndex = index + query.length;
-    index = lowerStr.indexOf(lowerQuery, lastIndex);
-  }
-  result += esc(str.slice(lastIndex));
-  return result;
-}
-
-function render() {
-  const filtered = getFiltered();
-  const tbody = document.getElementById('recordsBody');
-  const emptyMsg = document.getElementById('emptyMsg');
-  const loadMoreWrap = document.getElementById('loadMoreWrap');
-
-  if (filtered.length === 0) {
-    tbody.innerHTML = '';
-    emptyMsg.style.display = 'block';
-    loadMoreWrap.style.display = 'none';
-    if (searchQuery) {
-      emptyMsg.classList.add('searching');
-      emptyMsg.innerHTML = `Ничего не найдено по запросу<br><span class="empty-query">${esc(searchQuery)}</span>`;
-    } else {
-      emptyMsg.classList.remove('searching');
-      emptyMsg.innerHTML = 'Записей нет';
-    }
-  } else {
-    emptyMsg.style.display = 'none';
-    tbody.innerHTML = filtered.map(r => {
-      const isIncome = r.type === 'income';
-      const badge = isIncome ? '<span class="badge badge-income">Приход</span>' : '<span class="badge badge-expense">Расход</span>';
-      return `
-        <tr>
-          <td>${highlight(r.month || '—', searchQuery)}</td>
-          <td>${highlight(r.date || '—', searchQuery)}</td>
-          <td>${badge}</td>
-          <td>${highlight(r.category || '—', searchQuery)}</td>
-          <td class="num ${isIncome ? 'income' : 'expense'}">${highlight(fmt(r.amount), searchQuery)}</td>
-          <td>${highlight(r.description || '—', searchQuery)}</td>
-          <td class="actions">
-            <button class="edit-btn" onclick="startEdit('${r.id}')" title="Редактировать">✏️</button>
-            <button class="delete-btn" onclick="deleteRecord('${r.id}')" title="Удалить">🗑️</button>
-          </td>
-          <td>
-            <input type="text" class="note-input" value="${esc(r.note || '')}" placeholder="Добавить заметку..." onblur="updateNote('${r.id}', this.value)" onkeydown="if(event.key==='Enter'){this.blur();}">
-          </td>
-        </tr>
-      `;
-    }).join('');
-    loadMoreWrap.style.display = (lastDocCount >= limitCount) ? 'flex' : 'none';
-  }
-
-  const income = filtered.filter(r => r.type === 'income').reduce((s, r) => s + Number(r.amount), 0);
-  const expense = filtered.filter(r => r.type === 'expense').reduce((s, r) => s + Number(r.amount), 0);
-  document.getElementById('reportIncome').textContent = fmt(income);
-  document.getElementById('reportExpense').textContent = fmt(expense);
-  document.getElementById('reportBalance').textContent = fmt(income - expense);
-}
-
-window.updateNote = async (id, text) => {
-  try { await updateDoc(doc(db, COLLECTION, id), { note: text.trim() }); }
-  catch (err) { console.error('Ошибка заметки:', err); showToast('Не удалось сохранить заметку', 'error'); }
-};
-
-document.getElementById('loadMoreBtn').addEventListener('click', () => {
-  limitCount += LIMIT_STEP;
-  showToast(`Загружаем ещё ${LIMIT_STEP} записей…`, 'info');
-  subscribeToRecords();
-});
-
-document.getElementById('addForm').addEventListener('submit', async (e) => {
+// PWA install
+let deferredPrompt = null;
+const installBanner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
-  const data = {
-    month: document.getElementById('month').value,
-    date: document.getElementById('date').value,
-    type: document.getElementById('type').value,
-    category: document.getElementById('category').value.trim(),
-    amount: parseFloat(document.getElementById('amount').value),
-    description: document.getElementById('description').value.trim()
-  };
-  try {
-    if (editingId) {
-      data.updatedAt = serverTimestamp();
-      await updateDoc(doc(db, COLLECTION, editingId), data);
-      showToast('Запись обновлена', 'success');
-      cancelEdit();
-    } else {
-      data.createdAt = serverTimestamp();
-      await addDoc(collection(db, COLLECTION), data);
-      showToast('Запись добавлена', 'success');
-      e.target.reset();
-      document.getElementById('date').valueAsDate = new Date();
-    }
-  } catch (err) { console.error('Ошибка:', err); showToast('Не удалось сохранить: ' + err.message, 'error'); }
+  deferredPrompt = e;
+  installBanner.classList.add('visible');
 });
-
-window.startEdit = (id) => {
-  const r = allRecords.find(x => x.id === id);
-  if (!r) return;
-  const monthSelect = document.getElementById('month');
-  if (r.month && ![...monthSelect.options].some(o => o.value === r.month)) {
-    const opt = document.createElement('option');
-    opt.value = r.month; opt.textContent = r.month;
-    monthSelect.appendChild(opt);
-  }
-  monthSelect.value = r.month || '';
-  document.getElementById('date').value = r.date || '';
-  document.getElementById('type').value = r.type || 'income';
-  document.getElementById('category').value = r.category || '';
-  document.getElementById('amount').value = r.amount != null ? r.amount : '';
-  document.getElementById('description').value = r.description || '';
-  editingId = id;
-  document.getElementById('formTitle').innerHTML = 'Редактирование <span class="editing-badge">изменение</span>';
-  document.getElementById('submitBtn').textContent = 'Сохранить';
-  document.getElementById('cancelEditBtn').style.display = 'inline-flex';
-  document.getElementById('addForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
-
-function cancelEdit() {
-  editingId = null;
-  document.getElementById('addForm').reset();
-  document.getElementById('month').value = '';
-  document.getElementById('date').valueAsDate = new Date();
-  document.getElementById('formTitle').textContent = 'Новая запись';
-  document.getElementById('submitBtn').textContent = 'Добавить';
-  document.getElementById('cancelEditBtn').style.display = 'none';
-}
-document.getElementById('cancelEditBtn').addEventListener('click', cancelEdit);
-
-window.deleteRecord = async (id) => {
-  if (!confirm('Удалить запись?')) return;
-  try {
-    await deleteDoc(doc(db, COLLECTION, id));
-    showToast('Запись удалена', 'info');
-    if (editingId === id) cancelEdit();
-  } catch (err) { console.error('Ошибка:', err); showToast('Не удалось удалить: ' + err.message, 'error'); }
-};
-
-async function loadXLSX() {
-  if (window.XLSX) return window.XLSX;
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-    script.onload = () => resolve(window.XLSX);
-    script.onerror = () => reject(new Error('Не удалось загрузить Excel'));
-    document.head.appendChild(script);
-  });
-}
-
-document.getElementById('exportBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('exportBtn');
-  btn.disabled = true;
-  btn.textContent = 'Загрузка…';
-  try {
-    await loadXLSX();
-    const filtered = getFiltered();
-    if (filtered.length === 0) { showToast('Нет данных для выгрузки', 'info'); return; }
-    const aoa = [['Месяц', 'Дата', 'Тип', 'Статья', 'Сумма', 'Назначение', 'Заметка']];
-    filtered.forEach(r => {
-      aoa.push([r.month || '', r.date || '', r.type === 'income' ? 'Приход' : 'Расход', r.category || '', Number(r.amount) || 0, r.description || '', r.note || '']);
-    });
-    const income = filtered.filter(r => r.type === 'income').reduce((s, r) => s + Number(r.amount), 0);
-    const expense = filtered.filter(r => r.type === 'expense').reduce((s, r) => s + Number(r.amount), 0);
-    aoa.push([], ['', '', '', 'Приходы:', income], ['', '', '', 'Расходы:', expense], ['', '', '', 'Баланс:', income - expense]);
-    const ws = XLSX.utils.aoa_to_sheet(aoa);
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let r = 1; r <= range.e.r; r++) {
-      const cell = ws[XLSX.utils.encode_cell({ r, c: 4 })];
-      if (cell && typeof cell.v === 'number') cell.z = '#,##0.00';
-    }
-    ws['!cols'] = [{ wch: 16 }, { wch: 12 }, { wch: 10 }, { wch: 22 }, { wch: 16 }, { wch: 32 }, { wch: 32 }];
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Отчёт');
-    const dateStr = new Date().toISOString().slice(0, 10);
-    XLSX.writeFile(wb, `finance_${dateStr}.xlsx`);
-    showToast('Экспорт готов', 'success');
-  } catch (err) { console.error(err); showToast('Ошибка экспорта: ' + err.message, 'error'); }
-  finally { btn.disabled = false; btn.textContent = 'Экспорт в Excel'; }
+installBtn?.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBanner.classList.remove('visible');
 });
-
-['filterType', 'filterCategory', 'filterDateFrom', 'filterDateTo'].forEach(id => {
-  document.getElementById(id).addEventListener('change', render);
+window.addEventListener('appinstalled', () => {
+  installBanner.classList.remove('visible');
+  deferredPrompt = null;
 });
-document.getElementById('resetFilters').addEventListener('click', () => {
-  document.getElementById('filterType').value = 'all';
-  document.getElementById('filterCategory').value = 'all';
-  document.getElementById('filterDateFrom').value = '';
-  document.getElementById('filterDateTo').value = '';
-  render();
-});
-
-// Старт
-populateMonthSelect();
-document.getElementById('date').valueAsDate = new Date();
-subscribeToRecords();
 </script>
 </body>
 </html>
