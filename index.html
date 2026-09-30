@@ -135,10 +135,12 @@
       border: 1px solid var(--border); background: var(--surface);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: none;
+      align-items: center; justify-content: center;
       box-shadow: var(--shadow-md); transition: all var(--transition);
       padding: 0; overflow: hidden;
     }
+    .theme-toggle.visible { display: flex; }
     .theme-toggle:hover { transform: scale(1.08) rotate(12deg); box-shadow: var(--shadow-lg); }
     .theme-toggle svg { position: absolute; width: 20px; height: 20px; transition: all var(--transition); }
     .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); color: #f59e0b; }
@@ -146,7 +148,6 @@
     [data-theme="dark"] .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
     [data-theme="dark"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
-    /* Экраны авторизации */
     .auth-screen {
       display: none; align-items: center; justify-content: center;
       min-height: 80vh; position: relative; z-index: 1;
@@ -372,7 +373,9 @@
       color: var(--high); font-family: var(--font); font-size: 0.8125rem; font-weight: 600;
       border-radius: 8px; cursor: pointer;
       box-shadow: var(--shadow-sm); transition: all var(--transition-fast);
+      display: none;
     }
+    .logout-btn.visible { display: block; }
     .logout-btn:hover { background: var(--high-soft); border-color: var(--high); }
 
     .toast-container {
@@ -397,7 +400,6 @@
     @keyframes slideIn { from { transform: translateX(110%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(110%); opacity: 0; } }
 
-    /* Универсальные стили для полей и кнопок авторизации */
     .field { display: flex; flex-direction: column; gap: 8px; }
     label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.03em; text-transform: uppercase; }
     input, select {
@@ -597,7 +599,7 @@
   <button class="logout-btn" id="logoutBtn">Выйти</button>
 </div>
 
-<button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" style="display:none;">
+<button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="4"></circle>
     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
@@ -636,18 +638,36 @@ let mfaResolver = null;
 let totpSecret = null;
 let mfaJustCompleted = false;
 
+// ✅ Флаг "MFA пройден сегодня" — сохраняется до конца текущего дня
+const MFA_FLAG_KEY = 'valeeryyy_mfa_verified_date';
+
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function setMfaVerified() {
+  try { localStorage.setItem(MFA_FLAG_KEY, todayStr()); } catch (e) {}
+}
+function isMfaVerified() {
+  try { return localStorage.getItem(MFA_FLAG_KEY) === todayStr(); } catch (e) { return false; }
+}
+function clearMfaVerified() {
+  try { localStorage.removeItem(MFA_FLAG_KEY); } catch (e) {}
+}
+
 // ==================== ЭКРАНЫ ====================
 function showScreen(screen) {
   document.querySelectorAll('.auth-screen').forEach(el => el.classList.remove('visible'));
   document.getElementById('mainPage').classList.remove('visible');
-  const themeToggle = document.getElementById('themeToggle');
-  themeToggle.style.display = 'none';
+  document.getElementById('themeToggle').classList.remove('visible');
+  document.getElementById('logoutBtn').classList.remove('visible');
   if (screen === 'login') document.getElementById('loginScreen').classList.add('visible');
   if (screen === 'mfa') document.getElementById('mfaScreen').classList.add('visible');
   if (screen === 'enroll') document.getElementById('enrollScreen').classList.add('visible');
   if (screen === 'app') {
     document.getElementById('mainPage').classList.add('visible');
-    themeToggle.style.display = 'flex';
+    document.getElementById('themeToggle').classList.add('visible');
+    document.getElementById('logoutBtn').classList.add('visible');
   }
 }
 
@@ -740,6 +760,7 @@ document.getElementById('mfaForm').addEventListener('submit', async (e) => {
     const assertion = TotpMultiFactorGenerator.assertionForSignIn(hint.uid, code);
     await mfaResolver.resolveSignIn(assertion);
     mfaJustCompleted = true;
+    setMfaVerified(); // ✅ Запоминаем, что MFA пройден сегодня
     if (auth.currentUser) {
       try { await auth.currentUser.getIdToken(true); } catch (e) {}
       try { await auth.currentUser.reload(); } catch (e) {}
@@ -770,7 +791,7 @@ async function startEnrollment(user) {
     try { await user.reload(); } catch (e) {}
     const fresh = auth.currentUser;
     const existing = fresh.multiFactor?.enrolledFactors || [];
-    if (existing.length > 0) { showApp(); return; }
+    if (existing.length > 0) { setMfaVerified(); showApp(); return; }
 
     const mfUser = multiFactor(fresh);
     const multiFactorSession = await mfUser.getSession();
@@ -790,6 +811,7 @@ async function startEnrollment(user) {
     console.error('[2FA] Ошибка:', err);
     if (err.code === 'auth/maximum-second-factor-count-exceeded' ||
         (err.message && err.message.includes('Too many'))) {
+      setMfaVerified();
       showApp();
       return;
     }
@@ -824,6 +846,7 @@ document.getElementById('enrollForm').addEventListener('submit', async (e) => {
     try { await auth.currentUser.getIdToken(true); } catch (e) {}
     try { await auth.currentUser.reload(); } catch (e) {}
     mfaJustCompleted = true;
+    setMfaVerified(); // ✅ Запоминаем, что 2FA настроена сегодня
     showToast('2FA успешно настроена!', 'success');
     showApp();
   } catch (err) {
@@ -842,6 +865,7 @@ document.getElementById('enrollForm').addEventListener('submit', async (e) => {
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   if (!confirm('Выйти?')) return;
   try {
+    clearMfaVerified(); // ✅ При выходе сбрасываем флаг
     await signOut(auth);
     showToast('Вы вышли', 'info');
   } catch (err) {
@@ -852,21 +876,32 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
 // ==================== ОТСЛЕЖИВАНИЕ ====================
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    if (mfaJustCompleted) {
-      mfaJustCompleted = false;
+    // ✅ Если MFA уже пройден сегодня — сразу пускаем в приложение
+    if (isMfaVerified()) {
+      console.log('[AUTH] MFA-флаг активен → сразу в приложение');
       showApp();
       return;
     }
+
+    if (mfaJustCompleted) {
+      mfaJustCompleted = false;
+      setMfaVerified();
+      showApp();
+      return;
+    }
+
     try { await user.getIdToken(true); } catch (e) {}
     try { await user.reload(); } catch (e) {}
     const fresh = auth.currentUser;
     const factors = fresh.multiFactor?.enrolledFactors || [];
     console.log('[AUTH] Вошёл:', fresh.email, '| TOTP:', factors.length);
+
     if (factors.length === 0) {
       if (window.__enrolling) return;
       window.__enrolling = true;
       try { await startEnrollment(fresh); } finally { window.__enrolling = false; }
     } else {
+      setMfaVerified();
       showApp();
     }
   } else {
