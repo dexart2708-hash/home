@@ -967,11 +967,11 @@ themeToggle.addEventListener('click', () => {
   applyThemeColor(next);
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW:', err));
-  });
-}
+//if ('serviceWorker' in navigator) {
+ // window.addEventListener('load', () => {
+  //  navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW:', err));
+//  });
+//}//
 
 let deferredPrompt = null;
 const installBanner = document.getElementById('installBanner');
