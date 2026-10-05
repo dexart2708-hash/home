@@ -1,5 +1,5 @@
 // ============ SERVICE WORKER ДЛЯ VALEERYYY.RU ============
-const CACHE_VERSION = 'valeeryyy-v1';
+const CACHE_VERSION = 'valeeryyy-v2';
 const CACHE_ASSETS = [
   './',
   './index.html',
